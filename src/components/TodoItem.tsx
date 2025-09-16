@@ -42,6 +42,8 @@ export const TodoItem: React.FC<Props> = ({
     }
 
     if (todo.title.trim() === todoTitle.trim()) {
+      setEditingTodoId(null);
+
       return;
     }
 
@@ -133,20 +135,20 @@ export const TodoItem: React.FC<Props> = ({
           >
             ×
           </button>
-          <div
-            data-cy="TodoLoader"
-            className={classNames('modal overlay', {
-              'is-active':
-                deletingTodoIds?.includes(todo.id) ||
-                toggleTodoIds?.includes(todo.id) ||
-                isProcessed,
-            })}
-          >
-            <div className="modal-background has-background-white-ter" />
-            <div className="loader" />
-          </div>
         </>
       )}
+      <div
+        data-cy="TodoLoader"
+        className={classNames('modal overlay', {
+          'is-active':
+            deletingTodoIds?.includes(todo.id) ||
+            toggleTodoIds?.includes(todo.id) ||
+            isProcessed,
+        })}
+      >
+        <div className="modal-background has-background-white-ter" />
+        <div className="loader" />
+      </div>
     </div>
   );
 };
