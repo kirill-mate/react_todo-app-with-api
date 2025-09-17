@@ -81,6 +81,10 @@ export const App: React.FC = () => {
       });
     } catch (error) {
       setErrorMessage(Errors.Update);
+
+      throw new Error(
+        error instanceof Error ? error.message : JSON.stringify(error),
+      );
     } finally {
       setToggleTodoIds(ids => ids.filter(id => id !== updatedTodo.id));
     }

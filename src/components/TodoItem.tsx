@@ -22,7 +22,7 @@ export const TodoItem: React.FC<Props> = ({
   onDelete = () => {},
   deletingTodoIds,
   isProcessed,
-  onUpdate = async () => {},
+  onUpdate = () => {},
   toggleTodoIds,
   editingTodoId,
   setEditingTodoId = () => {},
@@ -47,16 +47,13 @@ export const TodoItem: React.FC<Props> = ({
       return;
     }
 
-    onUpdate({ ...todo, title: todoTitle.trim() })
+    Promise.resolve(onUpdate?.({ ...todo, title: todoTitle.trim() }))
       .then(() => {
         setEditingTodoId(null);
       })
       .catch(() => {
         setHasErrorEditing(true);
-
-        if (inputRef.current) {
-          inputRef.current.focus();
-        }
+        inputRef.current?.focus();
       });
   }
 
@@ -90,7 +87,7 @@ export const TodoItem: React.FC<Props> = ({
           type="checkbox"
           className="todo__status"
           checked={todo?.completed}
-          onClick={() => {
+          onChange={() => {
             const updatedTodo = { ...todo, completed: !todo.completed };
 
             onUpdate(updatedTodo);
